@@ -1,17 +1,11 @@
 # 💜 Bil Adek
 
-Aplikasi penjejak bil & belanja harian untuk suri rumah — moden, premium, tema ungu dengan gambar kami sebagai latar.
+Aplikasi web untuk Adek (suri rumah) menjejak bil dan perbelanjaan harian, mingguan dan bulanan. Tema ungu, gaya sama seperti app Abe Chik.
 
-## Ciri-ciri
-- **Utama** — jumlah belanja bulan ini, bar bajet, belanja hari ini, bil belum bayar, purata harian
-- **Kalendar harian** — leret hari, lihat bil setiap hari
-- **Bil akan datang** — bil belum dibayar, tanda LEWAT jika melepasi tarikh
-- **12 kategori** — Barang Dapur, Elektrik, Air, Internet, Anak & Sekolah, Minyak, Sewa, Kereta, Makan Luar, Kesihatan, dll.
-- **Bil berulang bulanan** — TNB, air, internet dijana automatik setiap bulan
-- **Senarai** — cari, tapis ikut status/kategori, tukar bulan
-- **Analisis** — carta donut kategori, graf harian, banding bulan lepas
-- **Tetapan** — nama, bajet, kecerahan gambar, backup/pulih JSON, eksport CSV
-- Boleh dipasang di telefon (PWA) & berfungsi offline. Data disimpan dalam telefon sahaja.
+- Rekod dengan **suara** (Bahasa Melayu, contoh: "barang dapur 85 ringgit Mydin guna kad") atau **taip**
+- Kategori suri rumah (Barang Dapur, Pasar, Elektrik, Air, Internet & Telefon, Anak & Sekolah, Susu & Lampin, Minyak & Tol, Rumah & Ansuran, Kereta, Makan Luar, Kesihatan, Diri & Kecantikan, Sedekah) serta kategori sendiri
+- Ikut cara bayar: Tunai, e-Wallet, Kad/Bank, DuitNow QR
+- Dashboard: hari ini, minggu ini, bulan ini, baki bajet, carta harian, rumusan mingguan, carta kategori
+- Eksport CSV; data disimpan dalam peranti (localStorage); boleh dipasang ke skrin utama (PWA)
 
-## Cara guna
-Buka `index.html`, atau hoskan folder ini (cth. GitHub Pages) dan pada telefon pilih **Add to Home Screen**.
+Buka `index.html` atau hoskan dengan GitHub Pages (Settings → Pages → branch ini).
