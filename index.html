@@ -45,14 +45,18 @@ button{cursor:pointer;border:0;background:none}
   animation:tw 6s ease-in-out infinite alternate}
 @keyframes tw{to{opacity:.15}}
 
-.app{max-width:520px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 18px) 16px calc(env(safe-area-inset-bottom) + 110px)}
+.hero{position:fixed;inset:0 0 auto;margin:0 auto;max-width:520px;height:100%;display:flex;flex-direction:column;
+  padding:calc(env(safe-area-inset-top) + 18px) max(16px,env(safe-area-inset-right)) 0 max(16px,env(safe-area-inset-left));
+  transform-origin:50% 0;will-change:opacity,transform}
+.hero-fill{flex:1 1 auto}
+.hero .summary{flex:0 0 auto}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 
 /* ---------- Header ---------- */
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .hello small{display:block;color:var(--muted);font-size:13px;font-weight:500;letter-spacing:.02em}
 .hello h1{margin:2px 0 0;font-family:"Great Vibes",cursive;font-weight:400;font-size:40px;line-height:1;text-shadow:0 4px 24px rgba(124,58,237,.6)}
 .chip-date{padding:8px 14px;border-radius:999px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-size:12px;font-weight:600;white-space:nowrap}
-.hero-space{height:min(36vh,290px)}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 input[type=number]{-moz-appearance:textfield}
 
@@ -156,14 +160,35 @@ input[type=number]{-moz-appearance:textfield}
 .set .it .mid small{color:var(--muted);font-size:12px}
 .set input[type=range]{width:110px;accent-color:var(--p300)}
 
-/* ---------- Bottom nav ---------- */
-.nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom) + 14px);width:min(488px,calc(100% - 32px));height:68px;border-radius:26px;display:flex;align-items:center;justify-content:space-around;padding:0 8px;z-index:20}
-.nav button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:700;color:var(--muted);width:58px;transition:.2s}
-.nav button svg{width:22px;height:22px}
-.nav button.on{color:#fff}
-.nav button.on svg{filter:drop-shadow(0 0 8px var(--pink))}
-.fab{width:58px!important;height:58px;border-radius:20px;margin-top:-30px;background:linear-gradient(140deg,#f0abfc,#8b5cf6 55%,#6d28d9);box-shadow:0 14px 30px -6px rgba(139,92,246,.9),inset 0 1px 0 rgba(255,255,255,.5);color:#fff!important;display:grid!important;place-items:center}
-.fab svg{width:26px!important;height:26px!important}
+/* ---------- Slide-up panel ---------- */
+.panel{position:fixed;left:0;right:0;top:0;margin:0 auto;max-width:520px;height:100%;z-index:20;
+  transform:translateY(var(--py,60vh));will-change:transform;
+  border-radius:32px 32px 0 0;border:1px solid var(--line);border-bottom:0;
+  background:linear-gradient(180deg,rgba(91,33,182,.6),rgba(46,16,101,.86) 30%,rgba(30,11,61,.95));
+  backdrop-filter:blur(28px) saturate(150%);-webkit-backdrop-filter:blur(28px) saturate(150%);
+  box-shadow:0 -24px 60px -20px rgba(15,0,40,.8),inset 0 1px 0 rgba(255,255,255,.25);
+  display:flex;flex-direction:column}
+.panel.anim{transition:transform .5s cubic-bezier(.2,.9,.15,1)}
+.hero.anim{transition:opacity .5s,transform .5s cubic-bezier(.2,.9,.15,1)}
+.phead{flex:0 0 auto;padding:10px 16px 12px;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.phead .grab{display:block;width:48px;height:6px;border-radius:9px;background:rgba(255,255,255,.45);margin:0 auto 6px;padding:0;position:relative}
+.phead .grab::before{content:"";position:absolute;inset:-14px -30px}
+.swipe-hint{text-align:center;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--p200);margin-bottom:10px;animation:bob 1.8s ease-in-out infinite;transition:opacity .25s;cursor:pointer}
+.panel.open .swipe-hint{opacity:0}
+@keyframes bob{50%{transform:translateY(-4px)}}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:4px;border-radius:16px;background:rgba(0,0,0,.22);border:1px solid var(--line)}
+.tabs button{height:38px;border-radius:12px;font-size:12.5px;font-weight:700;color:var(--muted);transition:.25s}
+.tabs button.on{background:#fff;color:var(--p800);box-shadow:0 6px 16px -6px rgba(221,214,254,.8)}
+.pbody{flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  padding:4px max(16px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + var(--py,60vh) + 110px) max(16px,env(safe-area-inset-left))}
+.panel.open .pbody{padding-bottom:calc(env(safe-area-inset-bottom) + 190px)}
+.panel:not(.open) .pbody{overflow:hidden}
+.pbody .stats{margin-top:4px}
+.fab{position:fixed;z-index:30;right:max(20px,calc(50% - 260px + 20px));bottom:calc(env(safe-area-inset-bottom) + 22px);width:62px;height:62px;border-radius:22px;
+  background:linear-gradient(140deg,#f0abfc,#8b5cf6 55%,#6d28d9);box-shadow:0 14px 30px -6px rgba(139,92,246,.9),inset 0 1px 0 rgba(255,255,255,.5);color:#fff;display:grid;place-items:center;transition:transform .2s}
+.fab:active{transform:scale(.92)}
+.fab svg{width:26px;height:26px}
+@media (prefers-reduced-motion:reduce){.swipe-hint{animation:none}.panel.anim,.hero.anim{transition-duration:.01s}}
 
 /* ---------- Sheet ---------- */
 .scrim{position:fixed;inset:0;background:rgba(15,3,35,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:.3s;z-index:40}
@@ -208,28 +233,41 @@ input[type=number]{-moz-appearance:textfield}
 .view{display:none}
 .view.on{display:block;animation:fade .35s}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}}
-.page-title{font-family:"Fraunces",serif;font-size:28px;margin:8px 2px 16px}
-.mini-hero{height:90px}
+.page-title{font-family:"Fraunces",serif;font-size:24px;margin:10px 2px 14px}
+
 </style>
 </head>
 <body>
 <div class="bg"></div><div class="sparkle"></div>
 
-<main class="app">
+<main class="hero" id="hero">
   <header class="top">
     <div class="hello"><small id="greet">Assalamualaikum</small><h1 id="who">Adek</h1></div>
     <div class="chip-date" id="todayChip"></div>
   </header>
+  <div class="hero-fill"></div>
+  <div class="glass summary">
+    <div class="row"><span class="lbl">Belanja <span id="mLabel"></span></span><span class="link" data-go="settings">Bajet ✎</span></div>
+    <div class="big"><span class="rm">RM</span><span id="mTotal">0.00</span></div>
+    <div class="bar" id="budgetBar"><i style="width:0"></i></div>
+    <div class="row"><span id="budgetTxt">Bajet RM0</span><span id="leftTxt"></span></div>
+  </div>
+</main>
 
-  <!-- ===== HOME ===== -->
-  <section class="view on" id="v-home">
-    <div class="hero-space"></div>
-    <div class="glass summary">
-      <div class="row"><span class="lbl">Belanja <span id="mLabel"></span></span><span class="link" data-go="settings">Bajet ✎</span></div>
-      <div class="big"><span class="rm">RM</span><span id="mTotal">0.00</span></div>
-      <div class="bar" id="budgetBar"><i style="width:0"></i></div>
-      <div class="row"><span id="budgetTxt">Bajet RM0</span><span id="leftTxt"></span></div>
+<!-- Slide-up panel -->
+<section class="panel" id="panel" aria-label="Panel bil">
+  <div class="phead" id="phead">
+    <button class="grab" id="grab" aria-label="Tarik ke atas atau ke bawah"></button>
+    <div class="swipe-hint" id="swipeHint">Leret ke atas ⌃</div>
+    <div class="tabs" role="tablist">
+      <button data-go="home" class="on">Utama</button>
+      <button data-go="list">Senarai</button>
+      <button data-go="stats">Analisis</button>
+      <button data-go="settings">Tetapan</button>
     </div>
+  </div>
+  <div class="pbody" id="pbody">
+  <section class="view on" id="v-home">
     <div class="stats">
       <div class="glass stat"><div class="ic" style="background:rgba(240,171,252,.2)">☀️</div><div class="v" id="sToday">RM0</div><div class="k">Hari ini</div></div>
       <div class="glass stat"><div class="ic" style="background:rgba(252,211,77,.18)">⏳</div><div class="v" id="sDue">RM0</div><div class="k" id="sDueK">Belum bayar</div></div>
@@ -245,9 +283,7 @@ input[type=number]{-moz-appearance:textfield}
     <div class="list" id="upcoming"></div>
   </section>
 
-  <!-- ===== LIST ===== -->
   <section class="view" id="v-list">
-    <div class="mini-hero"></div>
     <h2 class="page-title">Semua Bil</h2>
     <div class="tools">
       <label class="glass search"><span>🔍</span><input id="q" placeholder="Cari bil…"></label>
@@ -260,9 +296,7 @@ input[type=number]{-moz-appearance:textfield}
     <div id="allList"></div>
   </section>
 
-  <!-- ===== STATS ===== -->
   <section class="view" id="v-stats">
-    <div class="mini-hero"></div>
     <h2 class="page-title">Analisis <span id="aMonth" style="font-size:18px;opacity:.7"></span></h2>
     <div class="glass card">
       <div class="lbl" style="margin-bottom:14px">Ikut kategori</div>
@@ -279,9 +313,7 @@ input[type=number]{-moz-appearance:textfield}
     </div>
   </section>
 
-  <!-- ===== SETTINGS ===== -->
   <section class="view" id="v-settings">
-    <div class="mini-hero"></div>
     <h2 class="page-title">Tetapan</h2>
     <div class="glass card set">
       <div class="it"><div class="ico">💜</div><div class="mid"><b>Nama panggilan</b><small>Untuk ucapan di atas</small></div></div>
@@ -300,16 +332,10 @@ input[type=number]{-moz-appearance:textfield}
     </div>
     <p style="text-align:center;color:var(--muted);font-size:12px;margin-top:20px">Data disimpan dalam telefon ini sahaja.<br>Dibuat dengan 💜 untuk Adek</p>
   </section>
-</main>
+  </div>
+</section>
 
-<!-- Bottom nav -->
-<nav class="glass nav">
-  <button data-go="home" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Utama</button>
-  <button data-go="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>Senarai</button>
-  <button class="fab" id="addBtn" aria-label="Tambah bil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
-  <button data-go="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12A9 9 0 1 1 12 3v9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg>Analisis</button>
-  <button data-go="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Tetapan</button>
-</nav>
+<button class="fab" id="addBtn" aria-label="Tambah bil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
 
 <!-- Add / edit sheet -->
 <div class="scrim" id="scrim"></div>
@@ -539,8 +565,8 @@ function render(){
 function go(v){
   view = v;
   $$('.view').forEach(e => e.classList.toggle('on', e.id === 'v-'+v));
-  $$('.nav [data-go]').forEach(b => b.classList.toggle('on', b.dataset.go === v));
-  window.scrollTo({top:0});
+  $$('.tabs [data-go]').forEach(b => b.classList.toggle('on', b.dataset.go === v));
+  $('#pbody').scrollTop = 0;
   render();
 }
 
@@ -596,7 +622,7 @@ $('#fCats').onclick = e => { const b = e.target.closest('[data-cat]'); if (!b) r
 
 /* ---------- global clicks ---------- */
 document.addEventListener('click', e => {
-  const g = e.target.closest('[data-go]'); if (g) return go(g.dataset.go);
+  const g = e.target.closest('[data-go]'); if (g) { if (!panelOpen) setPanel(true); return go(g.dataset.go); }
   const tg = e.target.closest('[data-toggle]');
   if (tg) { const b = S.bills.find(x => x.id === tg.dataset.toggle); if (b) { b.paid = !b.paid; save(); render(); toast(b.paid ? 'Ditanda dibayar ✅' : 'Ditanda belum bayar'); } return; }
   const ed = e.target.closest('[data-edit]'); if (ed) { const b = S.bills.find(x => x.id === ed.dataset.edit); if (b) openSheet(b); return; }
@@ -630,6 +656,82 @@ $('#csv').onclick = () => { const m = ym(todayISO());
     .map(b => [b.date, b.name, catOf(b.cat).n, (+b.amt).toFixed(2), b.paid?'Dibayar':'Belum', b.pay||'', b.rec?'Ya':'', b.note||'']));
   download(`bil-adek-${m}.csv`, '﻿' + rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n'), 'text/csv'); toast('CSV dimuat turun 📄'); };
 $('#wipe').onclick = async () => { if (await ask('Padam SEMUA data bil? Tindakan ini tidak boleh diundur.')) { S = {...def, name:S.name, budget:S.budget, opacity:S.opacity, bills:[]}; save(); render(); toast('Semua data dipadam'); } };
+
+/* ---------- slide-up panel ---------- */
+const panel = $('#panel'), pbody = $('#pbody'), hero = $('#hero');
+let panelOpen = false, yOpen = 0, yClosed = 0, curY = 0;
+function measure(){
+  const H = window.innerHeight;
+  const top = parseFloat(getComputedStyle(document.documentElement).paddingTop) || 0;
+  yOpen = Math.round(top + 64);
+  yClosed = Math.round(Math.max(H * 0.58, Math.min(H - 290, 600)));
+  document.documentElement.style.setProperty('--peekTop', yClosed + 'px');
+  document.documentElement.style.setProperty('--py', yClosed + 'px');
+  hero.style.paddingBottom = (H - yClosed + 16) + 'px';
+}
+function place(y){
+  curY = Math.min(Math.max(y, yOpen - 30), yClosed + 60);
+  panel.style.setProperty('--py', curY + 'px');
+  const t = Math.min(Math.max((yClosed - curY) / (yClosed - yOpen), 0), 1);
+  hero.style.opacity = String(1 - t * 0.8);
+  hero.style.transform = 'scale(' + (1 - t * 0.05) + ')';
+}
+function setPanel(open){
+  panelOpen = open;
+  panel.classList.add('anim'); hero.classList.add('anim');
+  panel.classList.toggle('open', open);
+  place(open ? yOpen : yClosed);
+  if (!open) pbody.scrollTop = 0;
+  setTimeout(() => { panel.classList.remove('anim'); hero.classList.remove('anim'); }, 520);
+}
+(function drag(){
+  let sy = 0, sp = 0, dragging = false, decided = false, lastY = 0, lastT = 0, v = 0;
+  function start(y, fromHead){ sy = lastY = y; sp = curY; lastT = performance.now(); v = 0; dragging = fromHead; decided = fromHead; }
+  function move(y, ev){
+    const dy = y - sy;
+    if (!decided) {
+      if (Math.abs(dy) < 6) return;
+      decided = true;
+      // Tertutup: leret menggerakkan panel. Terbuka: tarik turun hanya dari atas senarai.
+      dragging = !panelOpen || (dy > 0 && pbody.scrollTop <= 0);
+      if (dragging) { sy = y; sp = curY; }
+    }
+    if (!dragging) return;
+    if (ev.cancelable) ev.preventDefault();
+    const now = performance.now();
+    v = (y - lastY) / Math.max(now - lastT, 1); lastY = y; lastT = now;
+    place(sp + (y - sy));
+  }
+  function end(){
+    const was = dragging; dragging = false; decided = false;
+    if (!was) return;
+    if (Math.abs(curY - sp) < 4) return setPanel(panelOpen);
+    const mid = (yOpen + yClosed) / 2;
+    setPanel(v < -0.3 ? true : v > 0.3 ? false : curY < mid);
+  }
+  panel.addEventListener('touchstart', e => {
+    const head = !!e.target.closest('.phead') && !e.target.closest('.tabs button');
+    start(e.touches[0].clientY, head);
+  }, {passive:true});
+  panel.addEventListener('touchmove', e => move(e.touches[0].clientY, e), {passive:false});
+  panel.addEventListener('touchend', end);
+  panel.addEventListener('touchcancel', end);
+  $('#phead').addEventListener('mousedown', e => {
+    if (e.target.closest('.tabs button') || e.target.closest('.grab')) return;
+    start(e.clientY, true);
+    const mm = ev => move(ev.clientY, ev);
+    const mu = () => { end(); window.removeEventListener('mousemove', mm); window.removeEventListener('mouseup', mu); };
+    window.addEventListener('mousemove', mm); window.addEventListener('mouseup', mu);
+  });
+  pbody.addEventListener('wheel', e => {
+    if (!panelOpen && e.deltaY > 0) setPanel(true);
+    else if (panelOpen && e.deltaY < -20 && pbody.scrollTop <= 0) setPanel(false);
+  }, {passive:true});
+})();
+$('#grab').addEventListener('click', () => setPanel(!panelOpen));
+$('#swipeHint').addEventListener('click', () => setPanel(true));
+window.addEventListener('resize', () => { measure(); place(panelOpen ? yOpen : yClosed); });
+measure(); place(yClosed);
 
 /* ---------- boot ---------- */
 syncRecurring();
